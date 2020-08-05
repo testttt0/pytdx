@@ -32,7 +32,10 @@ class GetSecurityList(BaseParser):
              pre_close_raw, reversed_bytes2) = struct.unpack("<6sH8s4sBI4s", one_bytes)
 
             code = code.decode("utf-8")
-            name = name_bytes.decode("gbk").rstrip("\x00")
+            try:
+                name = name_bytes.decode("gbk").rstrip("\x00")
+            except:
+                name = name_bytes[:-1].decode("gbk").rstrip("\x00")
             pre_close = get_volume(pre_close_raw)
             pos += 29
 
